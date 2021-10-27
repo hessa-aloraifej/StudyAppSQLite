@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         var buttonkotlin= findViewById<Button>(R.id.buttonk)
         var buttonandroid=findViewById<Button>(R.id.buttona)
+        var addbtn=findViewById<Button>(R.id.addbtnn)
         buttonkotlin.setOnClickListener {
             val intent = Intent(this, kotlinactivity::class.java)
             startActivity(intent)
@@ -21,6 +22,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, androidactivity::class.java)
             startActivity(intent)
         }
+        addbtn.setOnClickListener {
+            val intent = Intent(this, ADDContents::class.java)
+            startActivity(intent)
+        }
+
 
     }
 }

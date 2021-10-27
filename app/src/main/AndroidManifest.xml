@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudyApp">
         <activity
+            android:name=".KKK"
+            android:exported="true" />
+        <activity
+            android:name=".ADDContents"
+            android:exported="true" />
+        <activity
             android:name=".dialogAlert"
             android:exported="true" />
         <activity

@@ -1,31 +1,80 @@
 package com.example.studyapp
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class kotlinactivity : AppCompatActivity() {
+    lateinit var myRV:RecyclerView
+    lateinit var dbhr:DBHlpr
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kotlinactivity)
 
 
-
-
-        val kotlintopics = arrayListOf(
-            arrayListOf("var and val", "Declaring variables.", "Detailed notes here."),
-            arrayListOf("User Input", "Getting user input.", "Detailed notes here."),
-            arrayListOf("Strings", "String concatenations, interpolation, and methods.", "Detailed notes here."),
-            arrayListOf("Data Types", "Understanding data types.", "Detailed notes here."),
-            arrayListOf("Basic Operations", "Performing math operations in Kotlin.", "Detailed notes here.")
-
-        )
-
-
-        val myRV=findViewById<RecyclerView>(R.id.rvMain)
-        myRV.adapter=RecyclerViewAdapter(this,kotlintopics)
-        myRV.layoutManager= LinearLayoutManager(this)
+       myRV =findViewById<RecyclerView>(R.id.rvMain)
+       dbhr=DBHlpr(applicationContext)
+        var type='k'
+        val data = dbhr.readData(type)
+        updateRV(data)
         title = "Kotlin Topics For Review"
     }
-}
+   fun updateRV(data: ArrayList<Lessons>){
+  myRV.adapter = RecyclerViewAdapter(this,data)
+         myRV.layoutManager = LinearLayoutManager(this)
+        }
+    fun remove(s: String){
+        dbhr.del(s)
+        updateRV(dbhr.readData('k'))
+    }
+    fun edit(s1: String, s2:String){
+        dbhr.update(s1,s2)
+        updateRV(dbhr.readData('k'))
+    }
+    fun customAlert(s: String){
+
+
+        val dialogBuilder = AlertDialog.Builder(this)
+        val input = EditText(this)
+
+        dialogBuilder.setMessage("Edit Your Content")
+            .setPositiveButton("Ok", DialogInterface.OnClickListener {
+                    dialog, id ->
+                edit(s,input.text.toString())
+            })
+            .setNegativeButton("Cancel", DialogInterface.OnClickListener {
+                    dialog, id ->dialog.cancel()
+            })
+
+        val alert = dialogBuilder.create()
+
+        alert.setTitle("Edit Note")
+        alert.setView(input)
+        alert.show()
+    }
+
+    fun confirmAlert(s: String){
+
+
+        val dialogBuilder = AlertDialog.Builder(this)
+
+        dialogBuilder.setMessage("Are You Sure To Delete This ?")
+            .setPositiveButton("Yes", DialogInterface.OnClickListener {
+                    dialog, id ->
+                remove(s)
+            })
+            .setNegativeButton("No", DialogInterface.OnClickListener {
+                    dialog, id ->dialog.cancel()
+            })
+
+        val alert = dialogBuilder.create()
+
+        alert.setTitle("Confirmation")
+        alert.show()
+    }
+
+    }
