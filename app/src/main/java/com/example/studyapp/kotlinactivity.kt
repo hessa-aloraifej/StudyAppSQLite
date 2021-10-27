@@ -24,7 +24,7 @@ class kotlinactivity : AppCompatActivity() {
         title = "Kotlin Topics For Review"
     }
    fun updateRV(data: ArrayList<Lessons>){
-  myRV.adapter = RecyclerViewAdapter(this,data)
+  myRV.adapter = RecyclerViewAdapter(null,this,data)
          myRV.layoutManager = LinearLayoutManager(this)
         }
     fun remove(s: String){

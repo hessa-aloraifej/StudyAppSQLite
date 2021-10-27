@@ -25,7 +25,7 @@ class androidactivity : AppCompatActivity() {
     }
 
 fun updateRV(data: ArrayList<Lessons>){
-    myRV.adapter = RecyclerViewAdapter(this@androidactivity,data)
+    myRV.adapter = RecyclerViewAdapter(this@androidactivity,null,data)
     myRV.layoutManager = LinearLayoutManager(this)
 }
 

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_row.view.*
 
-class RecyclerViewAdapter(private val activity:Activity, private val study: ArrayList<Lessons>):RecyclerView.Adapter<RecyclerViewAdapter.ItemViewHolder>() {
+class RecyclerViewAdapter( private val android:androidactivity?=null, private val kotlin:kotlinactivity?=null,private val study: ArrayList<Lessons>):RecyclerView.Adapter<RecyclerViewAdapter.ItemViewHolder>() {
     class ItemViewHolder (itemView: View): RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -23,17 +23,38 @@ class RecyclerViewAdapter(private val activity:Activity, private val study: Arra
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
            val data=study[position]
+
+
         holder.itemView.apply {
             textView2.text=data.name
             textView3.text=data.description
-            cardview.setOnClickListener { dialogAlert(activity,data.name , "details here")
+
+
+            cardview.setOnClickListener {
+                if(android==null)
+                {
+
+                    if (kotlin != null) {
+                        dialogAlert(kotlin,data.name , "details here")
+                    }
+                }
+                else{
+
+                    dialogAlert(android,data.name , "details here")
+                }
+
+
             }
+
             delbtn.setOnClickListener(){
-               activity
+                android?.confirmAlert(data.name)
+                kotlin?.confirmAlert(data.name)
+
 
             }
             editbtn.setOnClickListener {
-//                activity.customAlert(data.name)
+            android?.customAlert(data.name)
+                kotlin?.customAlert(data.name)
             }
         }
     }
